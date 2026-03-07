@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
+site_name: Release Version Manager
+site_url: https://nrwldev.github.io/bumpversion-slim/
+repo_name: bumpversion-slim
+repo_url: https://github.com/NRWLDev/bumpversion-slim
+nav:
+  - index.md
+  - usage.md
+  - hooks.md
+  - configuration.md
+theme:
+  name: material
+  favicon: favicon.svg
+  icon:
+    logo: fontawesome/solid/table-list
+    repo: fontawesome/brands/git-alt
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.sections
+    - navigation.tracking
+    - toc.follow
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+extra:
+  social:
+    - icon: fontawesome/solid/envelope
+      link: mailto:admin@nrwl.co
