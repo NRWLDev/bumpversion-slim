@@ -60,7 +60,7 @@ def check_deprecations(cfg: dict) -> None:  # noqa: ARG001
     return
 
 
-def read(path: str = "pyproject.toml", **kwargs: P.kwargs) -> Config:
+def read(path: str = "pyproject.toml", *args: P.args, **kwargs: P.kwargs) -> Config:  # noqa: ARG001
     """Read configuration from local environment.
 
     Supported configuration locations (checked in order):
@@ -73,7 +73,7 @@ def read(path: str = "pyproject.toml", **kwargs: P.kwargs) -> Config:
 
     if not pyproject.exists():
         msg = "pyproject.toml configuration missing."
-        raise errors.ChangelogException(msg)
+        raise errors.BumpException(msg)
 
     # parse pyproject
     cfg = _process_pyproject(pyproject)
@@ -86,4 +86,4 @@ def read(path: str = "pyproject.toml", **kwargs: P.kwargs) -> Config:
         return Config(**cfg)
     except TypeError as e:
         msg = "Invalid configuration."
-        raise errors.ChangelogException(msg) from e
+        raise errors.BumpException(msg) from e

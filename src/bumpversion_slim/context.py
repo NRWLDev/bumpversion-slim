@@ -38,29 +38,29 @@ class Context:
         """Dedent context messaging."""
         self._indent = max(0, self._indent - 1)
 
-    def _echo(self, message: str, *args: P.args) -> None:
+    def _echo(self, message: str, *args: P.args, **kwargs: P.kwargs) -> None:  # noqa: ARG002
         """Echo to the console."""
         message = message % args
         print(f"{'  ' * self._indent}{message}")
 
-    def error(self, message: str, *args: P.args) -> None:
+    def error(self, message: str, *args: P.args, **kwargs: P.kwargs) -> None:
         """Echo to the console."""
-        self._echo(message, *args)
+        self._echo(message, *args, **kwargs)
 
-    def warning(self, message: str, *args: P.args) -> None:
+    def warning(self, message: str, *args: P.args, **kwargs: P.kwargs) -> None:
         """Echo to the console for -v."""
         if self._verbose > Verbosity.quiet:
-            self._echo(message, *args)
+            self._echo(message, *args, **kwargs)
 
-    def info(self, message: str, *args: P.args) -> None:
+    def info(self, message: str, *args: P.args, **kwargs: P.kwargs) -> None:
         """Echo to the console for -vv."""
         if self._verbose > Verbosity.verbose1:
-            self._echo(message, *args)
+            self._echo(message, *args, **kwargs)
 
-    def debug(self, message: str, *args: P.args) -> None:
+    def debug(self, message: str, *args: P.args, **kwargs: P.kwargs) -> None:
         """Echo to the console for -vvv."""
         if self._verbose > Verbosity.verbose2:
-            self._echo(message, *args)
+            self._echo(message, *args, **kwargs)
 
     def stacktrace(self) -> None:
         """Echo exceptions to console for -vvv."""
@@ -73,4 +73,3 @@ class Context:
             s = s.replace("\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^", "")
             sio.close()
             self._echo(s)
-

@@ -64,7 +64,6 @@ class BumpVersion:  # noqa: D101
         self.config = cfg
         self.new = new
 
-
     def replace(self, version: str) -> list[str]:  # noqa: D102
         cwd = Path.cwd()
         files_to_modify = {

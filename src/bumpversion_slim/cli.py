@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+import argparse
 import importlib
 import importlib.metadata
 import time
-import argparse
 
 import typer
 
@@ -15,15 +15,26 @@ from bumpversion_slim.bump import BumpVersion
 from bumpversion_slim.context import Context
 from bumpversion_slim.git import Git
 
-
 version = importlib.metadata.version("bumpversion_slim")
 parser = argparse.ArgumentParser(prog="bumpversion")
 parser.add_argument("--version", action="version", version=f"%(prog)s {version}")
 parser.add_argument("version_number", help="The desired version number to bump to.")
 parser.add_argument("--dry-run", action=argparse.BooleanOptionalAction, help="Don't commit changes, check for errors.")
-parser.add_argument("--allow-dirty", action=argparse.BooleanOptionalAction, help="Don't abort if branch contains uncommited changes.")
-parser.add_argument("--allow-missing", action=argparse.BooleanOptionalAction, help="Don't abort if missing commits on origin.")
-parser.add_argument("--commit", action=argparse.BooleanOptionalAction, help="Commit changes made to package, and configured files, after writing.")
+parser.add_argument(
+    "--allow-dirty",
+    action=argparse.BooleanOptionalAction,
+    help="Don't abort if branch contains uncommitted changes.",
+)
+parser.add_argument(
+    "--allow-missing",
+    action=argparse.BooleanOptionalAction,
+    help="Don't abort if missing commits on origin.",
+)
+parser.add_argument(
+    "--commit",
+    action=argparse.BooleanOptionalAction,
+    help="Commit changes made to package, and configured files, after writing.",
+)
 parser.add_argument("--tag", action=argparse.BooleanOptionalAction, help="Tag changes made after commit.")
 parser.add_argument("--verbose", "-v", action="count", default=0, help="Set output verbosity.")
 

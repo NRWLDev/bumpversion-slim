@@ -5,5 +5,6 @@ class BumpException(Exception):  # noqa: N818
 class GitError(BumpException):
     """Version control error."""
 
+
 class VersionError(BumpException):
     """Version change error."""
