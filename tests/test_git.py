@@ -5,13 +5,14 @@ import pytest
 
 from bumpversion_slim import errors
 from bumpversion_slim import git as vcs
+from bumpversion_slim.config import Config
 from bumpversion_slim.context import Context
 from bumpversion_slim.git import Git
 
 
 @pytest.fixture
 def context():
-    return Context()
+    return Context(Config(current_version="0.1.0"))
 
 
 @pytest.fixture

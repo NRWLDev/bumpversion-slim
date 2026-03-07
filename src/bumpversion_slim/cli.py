@@ -78,7 +78,7 @@ def main() -> None:
         tag=parsed.tag,
         verbose=parsed.verbose,
     )
-    context = Context(parsed.verbose)
+    context = Context(cfg, parsed.verbose)
 
     try:
         _bump(

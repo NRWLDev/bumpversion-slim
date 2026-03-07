@@ -3,26 +3,32 @@ from unittest import mock
 
 import pytest
 
+from bumpversion_slim.config import Config
 from bumpversion_slim.context import Context
 
 
-def test_indent():
-    c = Context()
+@pytest.fixture
+def config():
+    return Config(current_version="0.0.0")
+
+
+def test_indent(config):
+    c = Context(config)
     c.indent()
 
     assert c._indent == 1
 
 
-def test_dedent():
-    c = Context()
+def test_dedent(config):
+    c = Context(config)
     c._indent = 2
     c.dedent()
 
     assert c._indent == 1
 
 
-def test_reset():
-    c = Context()
+def test_reset(config):
+    c = Context(config)
     c._indent = 2
     c.reset()
 
@@ -30,9 +36,9 @@ def test_reset():
 
 
 @pytest.mark.parametrize("verbosity", [0, 1, 2, 3])
-def test_verbosity(verbosity, monkeypatch):
+def test_verbosity(verbosity, monkeypatch, config):
     monkeypatch.setattr(Context, "_echo", mock.Mock())
-    c = Context(verbosity)
+    c = Context(config, verbosity)
 
     messages = [
         "error",
@@ -46,9 +52,9 @@ def test_verbosity(verbosity, monkeypatch):
     assert c._echo.call_args_list == [mock.call(message) for message in messages[: verbosity + 1]]
 
 
-def test_stacktrace(monkeypatch):
+def test_stacktrace(monkeypatch, config):
     monkeypatch.setattr(Context, "_echo", mock.Mock())
-    c = Context(3)
+    c = Context(config, 3)
 
     try:
         raise Exception("message")  # noqa: TRY002, EM101
@@ -58,16 +64,16 @@ def test_stacktrace(monkeypatch):
     name = Path(__file__)
     assert c._echo.call_args == mock.call(
         f"""Traceback (most recent call last):
-  File "{name}", line 54, in test_stacktrace
+  File "{name}", line 60, in test_stacktrace
     raise Exception("message")  # noqa: TRY002, EM101
 Exception: message
 """,
     )
 
 
-def test_stacktrace_quiet(monkeypatch):
+def test_stacktrace_quiet(monkeypatch, config):
     monkeypatch.setattr(Context, "_echo", mock.Mock())
-    c = Context(2)
+    c = Context(config, 2)
 
     try:
         raise Exception("message")  # noqa: TRY002, EM101
