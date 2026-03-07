@@ -1,6 +1,6 @@
 [project]
 name = "bumpversion-slim"
-version = "0.1.0"
+version = "0.0.0"
 description = "A lightweight tool to bump package versions"
 authors = [
     { name = "Daniel Edgecombe", email = "daniel@nrwl.co" }
@@ -117,7 +117,7 @@ output-format = "concise"
 exclude = ["tests/*"]
 
 [tool.bumpversion]
-current_version = "0.1.0"
+current_version = "0.0.0"
 allow_dirty = true
 allow_missing = true
 commit_extra = ["CHANGELOG.md"]
