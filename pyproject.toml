@@ -101,8 +101,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-# "tasks.py" = ["ANN", "E501", "INP001"]
-# "changelog_gen/cli/command.py" = ["UP007", "B008"]
+"tasks.py" = ["ANN", "E501", "INP001"]
 "tests/*" = ["ANN", "D", "S105", "S106", "SLF001", "S101", "PLR0913"]
 
 [tool.ruff.lint.flake8-quotes]
@@ -123,9 +122,14 @@ allow_dirty = true
 allow_missing = true
 commit_extra = ["CHANGELOG.md"]
 
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+pattern = 'version = "{version}"'
+
 [tool.git-cliff.bump]
 features_always_bump_minor = false
 breaking_always_bump_major = false
+initial_tag = "0.1.0"
 
 [tool.git-cliff.changelog]
 header = """
