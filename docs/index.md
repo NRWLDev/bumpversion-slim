@@ -4,7 +4,7 @@ This tool is intended as a very light version of
 [bump-my-version](https://github.com/callowayproject/bump-my-version). It does
 not provide semantic version generation, instead relying on the version
 specifically being supplied. This is due to this projects intention of
-augmenting [git-cliff](), which provides changelog generation from conventional
+augmenting [git-cliff](https://git-cliff.org), which provides changelog generation from conventional
 commits as well as semantic versioning, but does not provide file update
 functionality or commit/tag support.
 
