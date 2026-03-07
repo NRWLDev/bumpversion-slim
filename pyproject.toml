@@ -57,6 +57,33 @@ dev = [
 [project.scripts]
 bumpversion = "bumpversion_slim.cli:main"
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = [
+    "--random-order",
+    "-p no:logging",
+]
+filterwarnings = [
+]
+markers = [
+    "backwards_compat: marks tests as part of backwards compatibility checks.",
+]
+
+[tool.coverage.report]
+sort = "cover"
+fail_under = 95
+show_missing = true
+skip_covered = true
+exclude_lines = [
+    "pragma: no cover",
+    "if t.TYPE_CHECKING:",
+    'warn',
+]
+
+[tool.coverage.run]
+branch = true
+source = ["src/bumpversion_slim"]
+
 [tool.ruff]
 line-length = 120
 target-version = "py310"
@@ -73,10 +100,10 @@ ignore = [
     "T201",
 ]
 
-# [tool.ruff.lint.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 # "tasks.py" = ["ANN", "E501", "INP001"]
 # "changelog_gen/cli/command.py" = ["UP007", "B008"]
-# "tests/*" = ["ANN", "D", "S105", "S106", "SLF001", "S101", "PLR0913"]
+"tests/*" = ["ANN", "D", "S105", "S106", "SLF001", "S101", "PLR0913"]
 
 [tool.ruff.lint.flake8-quotes]
 docstring-quotes = "double"

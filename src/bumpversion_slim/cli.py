@@ -3,9 +3,8 @@ from __future__ import annotations
 import argparse
 import importlib
 import importlib.metadata
+import sys
 import time
-
-import typer
 
 from bumpversion_slim import (
     config,
@@ -46,54 +45,55 @@ def process_info(info: dict, context: Context, cfg: config.Config, *, dry_run: b
 
     if info["dirty"] and not cfg.allow_dirty:
         context.error("Working directory is not clean. Use `allow_dirty` configuration to ignore.")
-        raise typer.Exit(code=1)
+        sys.exit(1)
 
     if info["missing_local"] and not cfg.allow_missing:
         context.error(
             "Current local branch is missing commits from remote %s.\nUse `allow_missing` configuration to ignore.",
             info["branch"],
         )
-        raise typer.Exit(code=1)
+        sys.exit(1)
 
     if info["missing_remote"] and not cfg.allow_missing:
         context.error(
             "Current remote branch is missing commits from local %s.\nUse `allow_missing` configuration to ignore.",
             info["branch"],
         )
-        raise typer.Exit(code=1)
+        sys.exit(1)
 
     allowed_branches = cfg.allowed_branches
     if allowed_branches and info["branch"] not in allowed_branches:
         context.error("Current branch not in allowed generation branches.")
-        raise typer.Exit(code=1)
+        sys.exit(1)
 
 
 def main() -> None:
     """Bump package version."""
-    args = parser.parse_args()
+    parsed = parser.parse_args()
     start = time.time()
     cfg = config.read(
-        allow_dirty=args.allow_dirty,
-        allow_missing=args.allow_missing,
-        commit=args.commit,
-        tag=args.tag,
-        verbose=args.verbose,
+        allow_dirty=parsed.allow_dirty,
+        allow_missing=parsed.allow_missing,
+        commit=parsed.commit,
+        tag=parsed.tag,
+        verbose=parsed.verbose,
     )
-    context = Context(args.verbose)
+    context = Context(parsed.verbose)
 
     try:
         _bump(
             context,
             cfg,
-            args.version_number,
-            dry_run=args.dry_run,
+            parsed.version_number,
+            dry_run=parsed.dry_run,
         )
     except errors.BumpException as ex:
         context.stacktrace()
-        context.debug("Run time (error) %f", (time.time() - start) * 1000)
+        context.debug("Run time (error) %fms", (time.time() - start) * 1000)
         context.error(str(ex))
-        raise typer.Exit(code=1) from ex
-    context.debug("Run time %f", (time.time() - start) * 1000)
+        sys.exit(1)
+    context.debug("Run time %fms", (time.time() - start) * 1000)
+    sys.exit(0)
 
 
 def _bump(
@@ -117,21 +117,21 @@ def _bump(
     for hook in cfg.hooks:
         try:
             import_path, hook_func = hook.split(":")
-        except ValueError as e:
+        except ValueError:
             context.error("Invalid hook format, expected `path.to.module:hook_func`.")
-            raise typer.Exit(code=1) from e
+            sys.exit(1)
 
         try:
             mod = importlib.import_module(import_path)
-        except ModuleNotFoundError as e:
+        except ModuleNotFoundError:
             context.error("Invalid hook module `%s`, not found.", import_path)
-            raise typer.Exit(code=1) from e
+            sys.exit(1)
 
         try:
             hooks.append(getattr(mod, hook_func))
-        except AttributeError as e:
+        except AttributeError:
             context.error("Invalid hook func `%s`, not found in hook module.", hook_func)
-            raise typer.Exit(code=1) from e
+            sys.exit(1)
 
     paths = cfg.commit_extra
     for hook in hooks:
