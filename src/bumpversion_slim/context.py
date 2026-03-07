@@ -6,6 +6,9 @@ import traceback
 import typing
 from enum import IntEnum
 
+if typing.TYPE_CHECKING:
+    from bumpversion_slim.config import Config
+
 
 class Verbosity(IntEnum):
     """Verbosity levels."""
@@ -22,7 +25,8 @@ P = typing.ParamSpec("P")
 class Context:
     """Global context class."""
 
-    def __init__(self, verbose: int = 0) -> None:
+    def __init__(self, config: Config, verbose: int = 0) -> None:
+        self.config = config
         self._verbose = verbose
         self._indent = 0
 
