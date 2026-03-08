@@ -3,10 +3,10 @@ from __future__ import annotations
 import io
 import sys
 import traceback
-import typing
+import typing as t
 from enum import IntEnum
 
-if typing.TYPE_CHECKING:
+if t.TYPE_CHECKING:
     from bumpversion_slim.config import Config
 
 
@@ -19,7 +19,7 @@ class Verbosity(IntEnum):
     verbose3 = 3
 
 
-P = typing.ParamSpec("P")
+P = t.ParamSpec("P")
 
 
 class Context:
