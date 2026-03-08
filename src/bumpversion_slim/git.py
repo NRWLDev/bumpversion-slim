@@ -77,7 +77,7 @@ class Git:
             self.add_paths(paths)
 
         msg = [
-            f"Update CHANGELOG for {new}",
+            f"chore(release): Generate {new} release",
             f"Bump version: {current} → {new}",
         ]
 

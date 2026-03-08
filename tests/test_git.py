@@ -169,7 +169,7 @@ def test_commit_adds_message_with_version_string(repo, context):
 
     assert (
         repo.api.head.commit.message
-        == "Update CHANGELOG for new_version\nBump version: current_version → new_version\n"
+        == "chore(release): Generate new_version release\nBump version: current_version → new_version\n"
     )
 
 
@@ -182,7 +182,7 @@ def test_commit_with_paths(repo, context):
 
     assert (
         repo.api.head.commit.message
-        == "Update CHANGELOG for new_version\nBump version: current_version → new_version\n"
+        == "chore(release): Generate new_version release\nBump version: current_version → new_version\n"
     )
 
 
@@ -219,7 +219,7 @@ def test_commit(repo, context):
 
     Git(context).commit("0.0.2", "0.0.3", "v0.0.3")
 
-    assert repo.api.head.commit.message == "Update CHANGELOG for 0.0.3\nBump version: 0.0.2 → 0.0.3\n"
+    assert repo.api.head.commit.message == "chore(release): Generate 0.0.3 release\nBump version: 0.0.2 → 0.0.3\n"
     assert git.TagReference(repo, path="refs/tags/v0.0.3") in repo.api.refs
 
 
@@ -235,7 +235,7 @@ def test_commit_no_tag(repo, context):
 
     Git(context, tag=False).commit("0.0.2", "0.0.3", "v0.0.3")
 
-    assert repo.api.head.commit.message == "Update CHANGELOG for 0.0.3\nBump version: 0.0.2 → 0.0.3\n"
+    assert repo.api.head.commit.message == "chore(release): Generate 0.0.3 release\nBump version: 0.0.2 → 0.0.3\n"
     assert git.TagReference(repo, path="refs/tags/v0.0.3") not in repo.api.refs
 
 
@@ -263,7 +263,7 @@ def test_commit_no_changes(context):
     assert (
         str(ex.value)
         == """Unable to commit: Cmd('git') failed due to: exit code(1)
-  cmdline: git commit --message=Update CHANGELOG for 0.0.3\nBump version: 0.0.2 → 0.0.3
+  cmdline: git commit --message=chore(release): Generate 0.0.3 release\nBump version: 0.0.2 → 0.0.3
   stdout: 'On branch main
 nothing to commit, working tree clean'"""
     )
