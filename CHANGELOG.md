@@ -1,6 +1,17 @@
 # Changelog
 
-## 0.1.0 (released 2026-03-07)
+## v0.1.1 (released 2026-03-08)
+
+### Documentation
+
+- Add mkdocs.yml[[2ecc4e3](https://github.com/NRWLDev/bumpversion-slim/commit/2ecc4e3815c20932764821849512c627b6632f51)]
+
+### Miscellaneous
+
+- Updated generated commit message to conventional commit format[[bed7430](https://github.com/NRWLDev/bumpversion-slim/commit/bed74308b6492767de9513f79d05590fe2bc6a5d)]
+- Add README page.[[a5e30d5](https://github.com/NRWLDev/bumpversion-slim/commit/a5e30d5d9ad58a8e02c8828247e9f81743520349)]
+
+## v0.1.0 (released 2026-03-07)
 
 ### Documentation
 
