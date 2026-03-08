@@ -146,7 +146,7 @@ body = """
     {% for commit in commits %}
         - {% if commit.breaking %}**Breaking:** {% endif %}\
         {{ commit.message | split(pat="\n") | first | upper_first | trim }}\
-        {%- if commit.links %} ({% for link in commit.links %}[{{link.text}}]({{link.href}}){% endfor -%}) {% endif %}\
+        {%- if commit.links %} {% for link in commit.links %}[{{link.text}}]({{link.href}}) {% endfor -%}{% endif %} \
         [[{{ commit.id | truncate(length=7, end="") }}](https://github.com/NRWLDev/bumpversion-slim/commit/{{ commit.id }})]\
     {% endfor %}
 {% endfor %}\n
